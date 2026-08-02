@@ -9,7 +9,7 @@ A note-taking Android app built with Jetpack Compose and modern Android architec
 - **Pin notes** — pinned notes are grouped separately at the top of the list
 - **Search** — live filtering across note title and content as you type
 - **Persistent storage** — notes are saved locally with Room and survive app restarts
-- **Staggered grid layout** — a Google Keep–style masonry grid that sizes each card to its content
+- **Staggered grid layout** — a Google Keep–style grid that sizes each card to its content
 
 ## Tech Stack
 
@@ -18,8 +18,8 @@ A note-taking Android app built with Jetpack Compose and modern Android architec
 - **Room** — local persistence with reactive `Flow`-based queries
 - **Hilt** — dependency injection for ViewModels and repositories
 - **Navigation Compose** — single-activity navigation with type-safe route arguments
-- **Kotlin Flow / StateFlow** — `combine()` used to merge the notes stream with live search input; UI state modeled as a sealed interface (`Loading` / `Success` / `Error`)
-- **Material 3** — theming, typography, and components
+- **Kotlin Flow / StateFlow** —  used to get notes stream with live search input; UI state modeled as a sealed interface (`Loading` / `Success` / `Error`)
+
 
 ## Architecture
 

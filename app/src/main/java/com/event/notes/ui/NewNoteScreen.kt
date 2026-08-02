@@ -25,7 +25,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 
@@ -79,6 +82,7 @@ fun NewNote(viewmodel: NoteViewmodel = hiltViewModel(), navController: NavContro
                     placeholder = { Text("Title") },
                     maxLines = 2,
                     modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Medium),
                     colors = TextFieldDefaults.colors(
                         unfocusedContainerColor = Color.Transparent,
                         focusedContainerColor = Color.Transparent,
@@ -94,6 +98,7 @@ fun NewNote(viewmodel: NoteViewmodel = hiltViewModel(), navController: NavContro
                 onValueChange = {viewmodel.updateNoteContent(it)},
                 placeholder = {Text("Note")},
                 modifier = Modifier.fillMaxWidth().weight(1f), //text remaining space, so clickable anywhere after title
+                textStyle = TextStyle(fontSize = 15.sp,),
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = Color.Transparent,
                     focusedContainerColor = Color.Transparent,

@@ -89,29 +89,29 @@ class NoteViewmodel @Inject constructor(
         if (title == originalTitle && content == originalContent && isPinned == initPinnedStatus){
             return
         }
-        try {
-            viewModelScope.launch {
-                val note = Note(
-                    id = noteId,
-                    title = title,
-                    description = content,
-                    isPinned = isPinned
-                )
-                dao.saveNote(note)
-            }
-        }catch (e: Exception){
-            UiState.Error(e.message ?: "failed to save")
+        viewModelScope.launch {
+           try {
+               val note = Note(
+                   id = noteId,
+                   title = title,
+                   description = content,
+                   isPinned = isPinned
+               )
+               dao.saveNote(note)
+           }catch (e: Exception){
+               UiState.Error(e.message ?: " unknown error")
+           }
         }
     }
     fun deleteNote(){
         if(noteId != 0) {
-            viewModelScope.launch {
-                try {
-                    dao.deleteNote(noteId)
-                } catch (e: Exception) {
-                    UiState.Error(e.message ?: "failed to delete")
-                }
-            }
+           try {
+               viewModelScope.launch {
+                   dao.deleteNote(noteId)
+               }
+           }catch (e: Exception){
+               UiState.Error(e.message ?: "dont know what happened!")
+           }
         }
     }
 

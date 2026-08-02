@@ -18,7 +18,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -27,7 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.stylusHoverIcon
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -75,49 +74,54 @@ fun MainScreen(viewmodel: NoteViewmodel = hiltViewModel(), navController: NavHos
                 }
 
                 is UiState.Success -> {
-                    LazyVerticalStaggeredGrid(
-                        modifier = Modifier.weight(1f),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp), // padding between column of card
-                        verticalItemSpacing = 10.dp, //padding between row of cards
-                        columns = StaggeredGridCells.Fixed(2),
-                        contentPadding = PaddingValues(10.dp),
-                    ) {
-                        item(span = StaggeredGridItemSpan.FullLine){ // stretch across both columns
-                            Text(
-                                text = "Pinned",
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
-                            )
-                        }
-                        items(
-                            state.notes.filter { it.isPinned },
-                            key = { it.id }
+                    if (state.notes.isEmpty()) {
+                        Text("No notes found", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center)
+                    }
+                    else {
+                        LazyVerticalStaggeredGrid(
+                            modifier = Modifier.weight(1f),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp), // padding between column of card
+                            verticalItemSpacing = 10.dp, //padding between row of cards
+                            columns = StaggeredGridCells.Fixed(2),
+                            contentPadding = PaddingValues(10.dp),
                         ) {
-                            NoteCard(
-                                title = it.title,
-                                content = it.description,
-                                noteId = it.id,
-                                navController = navController
-                            )
-                        }
+                            item(span = StaggeredGridItemSpan.FullLine) { // stretch across both columns
+                                Text(
+                                    text = "Pinned",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                                )
+                            }
+                            items(
+                                state.notes.filter { it.isPinned },
+                                key = { it.id }
+                            ) {
+                                NoteCard(
+                                    title = it.title,
+                                    content = it.description,
+                                    noteId = it.id,
+                                    navController = navController
+                                )
+                            }
 
-                        item(span = StaggeredGridItemSpan.FullLine){
-                            Text(
-                                text = "Others",
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.padding(horizontal =20.dp, vertical = 8.dp)
-                            )
-                        }
-                        items(
-                            state.notes.filter{!it.isPinned},
-                            key = { it.id }
-                        ) {
-                            NoteCard(
-                                title = it.title,
-                                content = it.description,
-                                noteId = it.id,
-                                navController = navController
-                            )
+                            item(span = StaggeredGridItemSpan.FullLine) {
+                                Text(
+                                    text = "Others",
+                                    style = MaterialTheme.typography.titleSmall,
+                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)
+                                )
+                            }
+                            items(
+                                state.notes.filter { !it.isPinned },
+                                key = { it.id }
+                            ) {
+                                NoteCard(
+                                    title = it.title,
+                                    content = it.description,
+                                    noteId = it.id,
+                                    navController = navController
+                                )
+                            }
                         }
                     }
                 }
